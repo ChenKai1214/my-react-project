@@ -1,0 +1,259 @@
+.home-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  animation: worldBreath 20s ease-in-out infinite;
+}
+
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 確保圖片不變形地填滿寬螢幕 */
+}
+
+/* 層級設定 */
+.bg {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+.clouds {
+  z-index: 2;
+  position: absolute;
+  top: -30%;
+  pointer-events: none;
+  object-fit: contain;
+  animation-timing-function: linear;
+  will-change: transform;
+}
+
+/* 遠雲 */
+
+.clouds.far {
+  width: 50%;
+  top: -20%;
+  left: -60%;
+  opacity: 0.6;
+  animation: cloudDriftFar 240s linear infinite;
+}
+
+/* 近雲：看得到，但很慢 */
+.clouds.near {
+  width: 60%;
+  top: -10%;
+  left: -103%;
+  opacity: 0.5;
+  animation: cloudDriftNear 180s linear infinite;
+}
+
+/* 中雲：一開始就在畫面內 */
+.clouds.middle {
+  width: 55%;
+  left: -10%;
+  top: -16%;
+  opacity: 0.45;
+  animation: cloudDriftMiddle 140s linear infinite;
+}
+
+/* 中央雲：一進畫面就看到 */
+.clouds.center {
+  width: 65%;
+  left: -5%;
+  top: -6%;
+  opacity: 0.6;
+  animation: cloudDriftCenter 100s linear infinite;
+}
+
+.river {
+  z-index: 3;
+  position: absolute;
+  width: 66%;
+  left: 15%;
+  top: 51%;
+  overflow: hidden;
+  pointer-events: none;
+  /* 增加一個微弱的陰影，讓河流與草地有層次感 */
+  filter: drop-shadow(0 0 5px rgba(0, 50, 100, 0.2));
+}
+
+.river img {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* 讓原本的河流圖片色彩更鮮豔一點 */
+  filter: saturate(1.2) contrast(1.1);
+}
+
+/* 水面第一層：強化波光與色彩深度 */
+.river::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* 使用藍色系漸層代替純白 */
+  background-image: linear-gradient(
+    115deg,
+    rgba(0, 100, 200, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(0, 100, 200, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: riverFlowMain 8s linear infinite;
+  /* 關鍵修正：使用 overlay 會讓顏色更深邃 */
+  mix-blend-mode: overlay;
+  opacity: 0.8;
+}
+
+/* 水面第二層：細微的深色擾動 */
+.river::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(0, 50, 150, 0.1) 50%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  background-size: 300% 300%;
+  animation: riverFlowDetail 12s linear infinite;
+  mix-blend-mode: soft-light;
+}
+.trees {
+  z-index: 4;
+  position: absolute;
+  width: 55%;
+  left: -4dvw;
+  bottom: -4dvh;
+  transform-origin: bottom center;
+  animation: treeWind 8s ease-in-out infinite;
+}
+.enter-btn {
+  z-index: 10;
+}
+/* 動物圖片初始樣式 */
+.animal {
+  position: absolute;
+  bottom: 10%; /* 可依需求調整位置 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px; /* 可依需求調整大小 */
+  height: auto;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out; /* 淡入淡出過渡 */
+  z-index: 3; /* 確保在樹或背景之上 */
+}
+
+/* 淡入 */
+.animal {
+  position: absolute;
+  height: auto;
+  opacity: 0;
+  z-index: 4;
+  transition: opacity 1s ease-in-out;
+}
+
+.animal.fade-in {
+  opacity: 1;
+}
+
+/* info-box 和進入按鈕淡入效果 */
+.info-box,
+.enter-btn {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.info-box.fade-in,
+.enter-btn.fade-in {
+  opacity: 1;
+}
+/* 動畫定義 */
+
+@keyframes cloudDriftFar {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(260vw);
+  }
+}
+
+@keyframes cloudDriftNear {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(280vw);
+  }
+}
+
+@keyframes cloudFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes cloudDriftMiddle {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(160vw);
+  }
+}
+
+@keyframes cloudDriftCenter {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(140vw);
+  }
+}
+
+@keyframes treeWind {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  30% {
+    transform: translateX(2px) rotate(0.6deg);
+  }
+  60% {
+    transform: translateX(-1px) rotate(-0.4deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+.home-container {
+  animation: worldBreath 20s ease-in-out infinite;
+}
+
+@keyframes worldBreath {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.03);
+  }
+}
+
+.content-overlay {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+  padding-bottom: 50px;
+}
