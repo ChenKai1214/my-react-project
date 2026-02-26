@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import World from "./pages/World.jsx";
+import { Navigate } from "react-router-dom";
 
 export default function App() {
   return (
