@@ -86,6 +86,7 @@ export default function App() {
       {/* 3. ToolBox */}
       <div className="absolute bottom-10 right-10 z-20 flex flex-col items-end gap-4">
         <ToolBox
+          lang={currentLang}
           onToggle={handleToolToggle}
           onEnterVR={() => console.log("enter VR")}
         />

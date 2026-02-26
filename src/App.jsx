@@ -6,7 +6,7 @@ export default function App() {
   return (
     <Routes>
       {/* 首頁 */}
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Navigate to="/world" replace />} />
 
       {/* 進入參觀後的世界 */}
       <Route path="/world" element={<World />} />
